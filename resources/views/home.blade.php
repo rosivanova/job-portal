@@ -11,14 +11,17 @@
           <h1 class="text-white font-weight-bold">The Easiest Way To Get Your Dream Job</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate est, consequuntur perferendis.</p>
         </div>
-        <form method="post" class="search-jobs-form">
+        <form method="POST" class="search-jobs-form" enctype="multipart/form-data">
+          @csrf
           <div class="row mb-5">
             <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
               <input type="text" class="form-control form-control-lg" placeholder="Job title, Company...">
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
               <select class="selectpicker" data-style="btn-white btn-lg" data-width="100%" data-live-search="true" title="Select Region">
-
+                @foreach($jobRegions as $key => $jobRegion)
+                <option value="{{$key}}">{{$jobRegion}}</option>
+                @endforeach
               </select>
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
@@ -90,7 +93,7 @@
         <span class="caption">Companies</span>
       </div>
 
-        
+
     </div>
   </div>
 </section>
@@ -102,11 +105,12 @@
 
     <div class="row mb-5 justify-content-center">
       <div class="col-md-7 text-center">
-        <h2 class="section-title mb-2">43,167 Job Listed</h2>
+        <h2 class="section-title mb-2"> {{ $totalJobs }} Listed job</h2>
       </div>
     </div>
-    
+
     <ul class="job-listings mb-5">
+      @foreach($jobs as $job){}
       <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
         <a href="job-single.html"></a>
         <div class="job-listing-logo">
@@ -115,143 +119,25 @@
 
         <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
           <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-            <h2>Product Designer</h2>
-            <strong>Adidas</strong>
+            <h2>{{ $job->job_title }}</h2>
+            <strong>{{ $job->company }}</strong>
           </div>
           <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-            <span class="icon-room"></span> New York, New York
-          </div>
-          <div class="job-listing-meta">
-            <span class="badge badge-danger">Part Time</span>
-          </div>
-        </div>
-        
-      </li>
-      <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-        <a href="job-single.html"></a>
-        <div class="job-listing-logo">
-          <img src="images/job_logo_2.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">
-        </div>
-
-        <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-          <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-            <h2>Digital Marketing Director</h2>
-            <strong>Sprint</strong>
+            <span class="icon-room"></span>{{ $job->job_region}}
           </div>
           <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-            <span class="icon-room"></span> Overland Park, Kansas 
+            <span class="icon-room"></span>{{ $job->salary}}
           </div>
           <div class="job-listing-meta">
-            <span class="badge badge-success">Full Time</span>
+            <span class="badge badge-danger">{{$job->job_type}}</span>
           </div>
         </div>
+
       </li>
-
-      <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-        <a href="job-single.html"></a>
-        <div class="job-listing-logo">
-          <img src="images/job_logo_3.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">
-        </div>
-
-        <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-          <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-            <h2>Back-end Engineer (Python)</h2>
-            <strong>Amazon</strong>
-          </div>
-          <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-            <span class="icon-room"></span> Overland Park, Kansas 
-          </div>
-          <div class="job-listing-meta">
-            <span class="badge badge-success">Full Time</span>
-          </div>
-        </div>
-      </li>
-
-      <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-        <a href="job-single.html"></a>
-        <div class="job-listing-logo">
-          <img src="images/job_logo_4.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">
-        </div>
-
-        <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-          <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-            <h2>Senior Art Director</h2>
-            <strong>Microsoft</strong>
-          </div>
-          <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-            <span class="icon-room"></span> Anywhere 
-          </div>
-          <div class="job-listing-meta">
-            <span class="badge badge-success">Full Time</span>
-          </div>
-        </div>
-      </li>
-
-      <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-        <a href="job-single.html"></a>
-        <div class="job-listing-logo">
-          <img src="images/job_logo_5.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">
-        </div>
-
-        <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-          <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-            <h2>Product Designer</h2>
-            <strong>Puma</strong>
-          </div>
-          <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-            <span class="icon-room"></span> San Mateo, CA 
-          </div>
-          <div class="job-listing-meta">
-            <span class="badge badge-success">Full Time</span>
-          </div>
-        </div>
-      </li>
-      <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-        <a href="job-single.html"></a>
-        <div class="job-listing-logo">
-          <img src="images/job_logo_1.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">
-        </div>
-
-        <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-          <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-            <h2>Product Designer</h2>
-            <strong>Adidas</strong>
-          </div>
-          <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-            <span class="icon-room"></span> New York, New York
-          </div>
-          <div class="job-listing-meta">
-            <span class="badge badge-danger">Part Time</span>
-          </div>
-        </div>
-        
-      </li>
-      <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-        <a href="job-single.html"></a>
-        <div class="job-listing-logo">
-          <img src="images/job_logo_2.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid">
-        </div>
-
-        <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-          <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-            <h2>Digital Marketing Director</h2>
-            <strong>Sprint</strong>
-          </div>
-          <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-            <span class="icon-room"></span> Overland Park, Kansas 
-          </div>
-          <div class="job-listing-meta">
-            <span class="badge badge-success">Full Time</span>
-          </div>
-        </div>
-      </li>
-
-      
-
-      
+      @endforeach
     </ul>
 
- 
+
 
   </div>
 </section>
@@ -282,7 +168,7 @@
             <p class="lead">Porro error reiciendis commodi beatae omnis similique voluptate rerum ipsam fugit mollitia ipsum facilis expedita tempora suscipit iste</p>
           </div>
         </div>
-        
+
       </div>
       <div class="col-6 col-lg-3 col-md-6 text-center">
         <img src="images/logo_mailchimp.svg" alt="Image" class="img-fluid logo-1">
@@ -315,37 +201,37 @@
 
 
 <section class="bg-light pt-5 testimony-full">
-    
-    <div class="owl-carousel single-carousel">
 
-    
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 align-self-center text-center text-lg-left">
-            <blockquote>
-              <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
-              <p><cite> &mdash; Corey Woods, @Dribbble</cite></p>
-            </blockquote>
-          </div>
-          <div class="col-lg-6 align-self-end text-center text-lg-right">
-            <img src="{{ asset('assets/images/person_transparent_2.png') }}" alt="Image" class="img-fluid mb-0">
-          </div>
+  <div class="owl-carousel single-carousel">
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 align-self-center text-center text-lg-left">
+          <blockquote>
+            <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
+            <p><cite> &mdash; Corey Woods, @Dribbble</cite></p>
+          </blockquote>
+        </div>
+        <div class="col-lg-6 align-self-end text-center text-lg-right">
+          <img src="{{ asset('assets/images/person_transparent_2.png') }}" alt="Image" class="img-fluid mb-0">
         </div>
       </div>
+    </div>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 align-self-center text-center text-lg-left">
-            <blockquote>
-              <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
-              <p><cite> &mdash; Chris Peters, @Google</cite></p>
-            </blockquote>
-          </div>
-          <div class="col-lg-6 align-self-end text-center text-lg-right">
-            <img src="images/person_transparent.png" alt="Image" class="img-fluid mb-0">
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 align-self-center text-center text-lg-left">
+          <blockquote>
+            <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
+            <p><cite> &mdash; Chris Peters, @Google</cite></p>
+          </blockquote>
+        </div>
+        <div class="col-lg-6 align-self-end text-center text-lg-right">
+          <img src="images/person_transparent.png" alt="Image" class="img-fluid mb-0">
         </div>
       </div>
+    </div>
 
   </div>
 

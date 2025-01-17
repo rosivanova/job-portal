@@ -6,6 +6,7 @@ use App\Models\PostedJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Foreach_;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        dd('da');
         // if (!Auth::check()) {
         //     // Redirect if the user is not authenticated
         //     return redirect()->route('login')->with('error', 'You need to be logged in to apply for a job.');
