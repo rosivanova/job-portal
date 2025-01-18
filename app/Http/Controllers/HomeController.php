@@ -35,7 +35,7 @@ class HomeController extends Controller
         $jobs = PostedJob::select()->take(5)->orderBy('id', 'desc')->get();
         $totalJobs = PostedJob::all()->count();
         $jobRegions = PostedJob::distinct()->pluck('job_region');
-
+        $jobTypes = PostedJob::distinct()->pluck('job_type');
 
         $duplicates = DB::table('searches')
             ->select('keyword', DB::raw('COUNT(*) as count'))
@@ -46,6 +46,6 @@ class HomeController extends Controller
             ->get()
             ->pluck('keyword');
 
-        return view('home', compact('jobs', 'totalJobs', 'jobRegions', 'duplicates'));
+        return view('home', compact('jobs', 'totalJobs', 'jobRegions', 'duplicates','jobTypes'));
     }
 }

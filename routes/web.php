@@ -10,4 +10,5 @@ Route::get('/', function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/search', [PostedJobController::class, 'search'])->name('search');
 Route::get('/posted-jobs', [PostedJobController::class, 'index'])->name('posted.jobs');

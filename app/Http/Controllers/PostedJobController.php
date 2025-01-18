@@ -120,6 +120,7 @@ class PostedJobController extends Controller
 
     public function search(Request $request)
     {
+
         Request()->validate([
             'job_title' => "required",
             // 'job_region' =>"required",
@@ -127,20 +128,33 @@ class PostedJobController extends Controller
 
         ]);
 
-        $job_title = $request->job_title;
-        $job_region = $request->job_region;
-        $job_type = $request->job_type;
+        $job_title = trim($request->job_title);
+        $job_region = trim($request->job_region);
+        $job_type = trim($request->job_type);
 
 
         Search::create([
             "keyword" => $request->job_title
         ]);
 
-        // $jobs = PostedJob::with('jobCategory')->orderBy('id', 'desc')->get();
-        $searches = PostedJob::with('jobCategory')->where('job_title', 'like', "%$job_title%")
-            ->where('job_region', 'like', "%$job_region%")
-            ->where('job_type', 'like', "%$job_type%")
+        $jobs = PostedJob::with('jobCategory')->orderBy('id', 'desc')->get();
+        // $searches = PostedJob::with('jobCategory')->where('job_title', 'like', "%$job_title%")
+        //     ->where('job_region', 'like', "%$job_region%")
+        //     ->where('job_type', 'like', "%$job_type%")
+        //     ->get();
+
+        $searches = PostedJob::with('jobCategory')
+            ->when($job_title, function ($query) use ($job_title) {
+                return $query->where('job_title', 'like', "%$job_title%");
+            })
+            ->when($job_region, function ($query) use ($job_region) {
+                return $query->where('job_region', 'like', "%$job_region%");
+            })
+            ->when($job_type, function ($query) use ($job_type) {
+                return $query->where('job_type', 'like', "%$job_type%");
+            })
             ->get();
+
 
         return view('pages.search', compact('searches'));
     }
