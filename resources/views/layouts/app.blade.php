@@ -54,7 +54,7 @@
                     <nav class="mx-auto site-navigation">
                         <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
                             <li><a href="{{ route('home')}}" class="nav-link active">Home</a></li>
-                            <li><a href="about.html">About</a></li>
+                            <li><a href="{{ route('about')}}">About Us</a></li>
 
                             <li><a href="{{ route('home')}}">Profile</a></li>
 
@@ -101,7 +101,7 @@
                     <div class="col-6 col-md-3 mb-4 mb-md-0">
                         <h3>Company</h3>
                         <ul class="list-unstyled">
-                            <li><a href="#">About Us</a></li>
+                            <li><a href="{{ route('about')}}">About Us</a></li>
                             <li><a href="#">Career</a></li>
                             <li><a href="#">Blog</a></li>
                             <li><a href="#">Resources</a></li>

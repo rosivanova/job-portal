@@ -11,6 +11,7 @@ use App\Models\JobCategory;
 use App\Models\Search;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use user;
 
 class PostedJobController extends Controller
 {
@@ -49,36 +50,45 @@ class PostedJobController extends Controller
                 ->where('user_id', Auth::user()->id)
                 ->count();
 
-            return view('posted-job.single', compact('posted_job', 'relatedJobs', 'relatedJobsCount', 'jobSaved', 'jobApplied', 'categories'));
+            return view('posted-jobs.single', compact('posted_job', 'relatedJobs', 'relatedJobsCount', 'jobSaved', 'jobApplied', 'categories'));
         } else {
             $categories = JobCategory::all();
-
-            return view('posted-job.single', compact('posted_job', 'relatedJobs', 'relatedJobsCount', 'categories'));
+            //  dd($categories);
+            return view('posted-jobs.single', compact('posted_job', 'relatedJobs', 'relatedJobsCount', 'categories'));
         }
     }
 
     public function saveJob(Request $request)
     {
+        if (!Auth::check()) {
+            // Redirect if the user is not authenticated
+            return redirect()->route('login')->with('error', 'You need to be logged in to apply for a job.');
+        }else{
+            return redirect('posted-jobs/' . $request->job_id . '/single')->with('save', 'Job successfully saved');
 
+            // protected $fillable =[
 
-        // protected $fillable =[
+            // ]
+            $saveJob = JobSaved::create(
+                [
+                    'job_id' => $request->job_id,
+                    'user_id' => Auth::user()->id,
+                    'job_image' => $request->job_image,
+                    'job_title' => $request->job_title,
+                    'job_region' => $request->job_region,
+                    'job_type' => $request->job_type,
+                    'company' => $request->company,
+                ]
+            );
 
-        // ]
-        $saveJob = JobSaved::create(
-            [
-                'job_id' => $request->job_id,
-                'user_id' => Auth::user()->id,
-                'job_image' => $request->job_image,
-                'job_title' => $request->job_title,
-                'job_region' => $request->job_region,
-                'job_type' => $request->job_type,
-                'company' => $request->company,
-            ]
-        );
-
-        if ($saveJob) {
-            return redirect('/posted-job/single/' . $request->job_id . '')->with('save', 'Job successfully saved');
-        }
+            if ($saveJob) {
+                return redirect('/posted-jobs/single/' . $request->job_id . '')->with('save', 'Job successfully saved');
+            }
+         } 
+        //else {
+        //     dd($request->job_id);
+        //     return redirect('/posted-jobs' . $request->job_id . '/single')->with('Login', 'Login');
+        // }
     }
 
     public function jobApply(Request $request)
