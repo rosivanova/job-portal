@@ -23,20 +23,25 @@
             {{ session('error') }}
         </div>
         @endif
+        @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
         <div class="row">
             <div class="col-md-12">
-                <form action="#" class="p-4 border rounded">
-
+                <form method="POST" action="{{ route('login.user')}}" class="p-4 border rounded">
+                @csrf
                     <div class="row form-group">
                         <div class="col-md-12 mb-3 mb-md-0">
                             <label class="text-black" for="fname">Email</label>
-                            <input type="text" id="fname" class="form-control" placeholder="Email address">
+                            <input type="text" name="email" id="email" class="form-control" placeholder="Email address">
                         </div>
                     </div>
                     <div class="row form-group mb-4">
                         <div class="col-md-12 mb-3 mb-md-0">
                             <label class="text-black" for="fname">Password</label>
-                            <input type="password" id="fname" class="form-control" placeholder="Password">
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Password">
                         </div>
                     </div>
 

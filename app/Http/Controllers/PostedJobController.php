@@ -40,7 +40,7 @@ class PostedJobController extends Controller
             ->groupBy('posted_jobs.jobcategory_id')
             ->get();;
 
-        if (auth()->user()) {
+        if (Auth::user()) {
 
             $jobSaved = JobSaved::where('job_id', $id)
                 ->where('user_id', Auth::user()->id)
@@ -64,31 +64,29 @@ class PostedJobController extends Controller
             // Redirect if the user is not authenticated
             return redirect()->route('login')->with('error', 'You need to be logged in to apply for a job.');
         }else{
-            return redirect('posted-jobs/' . $request->job_id . '/single')->with('save', 'Job successfully saved');
 
             // protected $fillable =[
 
             // ]
+
+           $posted_job = PostedJob::find($request->id);
+
             $saveJob = JobSaved::create(
                 [
-                    'job_id' => $request->job_id,
+                    'job_id' => $request->id,
                     'user_id' => Auth::user()->id,
-                    'job_image' => $request->job_image,
-                    'job_title' => $request->job_title,
-                    'job_region' => $request->job_region,
-                    'job_type' => $request->job_type,
-                    'company' => $request->company,
+                    'job_image' => $posted_job->job_image,
+                    'job_title' => $posted_job->job_title,
+                    'job_region' => $posted_job->job_region,
+                    'job_type' => $posted_job->job_type,
+                    'company' => $posted_job->company,
                 ]
             );
 
             if ($saveJob) {
-                return redirect('/posted-jobs/single/' . $request->job_id . '')->with('save', 'Job successfully saved');
+                return redirect('posted-jobs/' . $request->id . '/single')->with('save', 'Job successfully saved');
             }
          } 
-        //else {
-        //     dd($request->job_id);
-        //     return redirect('/posted-jobs' . $request->job_id . '/single')->with('Login', 'Login');
-        // }
     }
 
     public function jobApply(Request $request)

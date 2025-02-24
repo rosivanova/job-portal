@@ -25,14 +25,16 @@ class AdminAuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('admin')->attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             return redirect()->route('admins.dashboard')->with('success', 'Successfully logged in as Admin');
             //return redirect('admins/dashboard')->with('success', 'Successfully logged in as Admin');
             //return view('admins.index')->with('success', 'Successfully logged in as Admin');
+        }else{
+            return redirect()->back()->with(['error' => 'Error logging in']);
+
         }
 
         // return back()->withErrors(['error' => 'Invalid credentials']);
-        return redirect()->back()->with(['error' => 'Error logging in']);
     }
 
 

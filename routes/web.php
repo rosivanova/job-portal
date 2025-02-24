@@ -1,15 +1,19 @@
 <?php
 
+use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostedJobController;
+use Illuminate\Support\Facades\Auth;
 
+// Auth::routes(['verify' => true]);
 
-Route::get('/', function () {
-    return view('home', [HomeController::class, 'index'])->name('home');
-});
+// Route::get('/', function () {
+//     return view('home', [HomeController::class, 'index'])->name('home');
+// });
 
 Route::get('/about', function () {
     return view('pages.about');
@@ -19,8 +23,31 @@ Route::get('/login', function () {
     return view('login'); // Return the 'login' view
 })->name('login');
 
+
+Route::post('/login', [LoginController::class, 'login'])->name('login.user');
+
+Route::post('logout', function () {
+    Auth::logout();
+    return redirect('/');  // Redirect to the home page or any page after logging out
+})->name('logout');
+
+Route::get('/register', function () {
+    return view('register'); // Return the 'register' view
+})->name('register');
+
+
+Route::post('/register', [RegisterController::class, 'register'])->name('register.user');
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/search', [PostedJobController::class, 'search'])->name('search');
+
+
+Route::get('/admin/login', [AdminAuthController::class, 'viewLogin'])->name('admins.login');
+Route::post('/admin/login', [AdminAuthController::class, 'checkLogin'])->name('admins.checklogin');
+Route::get('/admin/dashboard', function () {
+    return view('admins.dashboard'); // Return the 'login' view
+})->name('admins.dashboard');
 
 Route::name('posted-jobs.')->group(function () {
     // Route::get('/', [PostedJobController::class, 'index'])->name('posted.jobs');

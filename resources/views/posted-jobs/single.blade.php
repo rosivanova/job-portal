@@ -57,6 +57,11 @@
 
 <section class="site-section">
   <div class="container">
+    @if (session('save'))
+    <div class="alert alert-success">
+      {{ session('save') }}
+    </div>
+    @endif
     <div class="row align-items-center mb-5">
       <div class="col-lg-8 mb-4 mb-lg-0">
         <div class="d-flex align-items-center">
@@ -73,83 +78,84 @@
           </div>
         </div>
       </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="mb-5">
-            <figure class="mb-5"><img src="images/job_single_img_1.jpg" alt="Image" class="img-fluid rounded"></figure>
-            <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Job Description</h3>
-            <p>{{$posted_job->job_description}}</p>
-
-          </div>
-          <div class="mb-5">
-            <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-rocket mr-3"></span>Responsibilities</h3>
-            <ul class="list-unstyled m-0 p-0">
-              <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{$posted_job->responsibilities}}</span></li>
-
-            </ul>
-          </div>
-
-          <div class="mb-5">
-            <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-book mr-3"></span>Education + Experience</h3>
-            <ul class="list-unstyled m-0 p-0">
-              <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{$posted_job->education_experience}}</span></li>
-
-            </ul>
-          </div>
-
-          <div class="mb-5">
-            <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-turned_in mr-3"></span>Other Benifits</h3>
-            <ul class="list-unstyled m-0 p-0">
-              <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{$posted_job->other_benefits}}</span></li>
-            </ul>
-          </div>
-          <div class="row mb-5">
-            <div class="col-6">
-              <form action="{{ route('posted-jobs.saveJob', ['id' => $posted_job->id]) }}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-block btn-light btn-md">
-                  <i class="icon-heart"></i> Save Job
-                </button>
-              </form>
-
-              <!-- <button class="btn btn-block btn-light btn-md"><i class="icon-heart"></i>Save Job</button> -->
-              <!--add text-danger to it to make it read-->
-            </div>
-            <div class="col-6">
-              <button class="btn btn-block btn-primary btn-md">Apply Now</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="bg-light p-3 border rounded mb-4">
-            <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Job Summary</h3>
-            <ul class="list-unstyled pl-3 mb-0">
-              <li class="mb-2"><strong class="text-black">Published on:</strong> {{ \Carbon\Carbon::parse($posted_job->created_at)->format('d-m-Y') }}</li>
-              <li class="mb-2"><strong class="text-black">Vacancy:</strong> {{$posted_job->vacancy}}</li>
-              <li class="mb-2"><strong class="text-black">Employment Status:</strong> {{$posted_job->job_type}}</li>
-              <li class="mb-2"><strong class="text-black">Experience:</strong> 2 to 3 year(s)</li>
-              <li class="mb-2"><strong class="text-black">Job Location:</strong> {{$posted_job->job_region}}</li>
-              <li class="mb-2"><strong class="text-black">Salary:</strong> {{$posted_job->salary}} Euro</li>
-              <li class="mb-2"><strong class="text-black">Gender:</strong> {{$posted_job->gender}}</li>
-              <li class="mb-2"><strong class="text-black">Application Deadline:</strong>
-              </li>
-            </ul>
-          </div>
-
-          <div class="bg-light p-3 border rounded">
-            <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Share</h3>
-            <div class="px-3">
-              <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-facebook"></span></a>
-              <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-twitter"></span></a>
-              <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
-            </div>
-          </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="mb-5">
+          <figure class="mb-5"><img src="images/job_single_img_1.jpg" alt="Image" class="img-fluid rounded"></figure>
+          <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Job Description</h3>
+          <p>{{$posted_job->job_description}}</p>
 
         </div>
-      </div>
+        <div class="mb-5">
+          <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-rocket mr-3"></span>Responsibilities</h3>
+          <ul class="list-unstyled m-0 p-0">
+            <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{$posted_job->responsibilities}}</span></li>
 
-   
+          </ul>
+        </div>
+
+        <div class="mb-5">
+          <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-book mr-3"></span>Education + Experience</h3>
+          <ul class="list-unstyled m-0 p-0">
+            <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{$posted_job->education_experience}}</span></li>
+
+          </ul>
+        </div>
+
+        <div class="mb-5">
+          <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-turned_in mr-3"></span>Other Benifits</h3>
+          <ul class="list-unstyled m-0 p-0">
+            <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>{{$posted_job->other_benefits}}</span></li>
+          </ul>
+        </div>
+        <div class="row mb-5">
+          <div class="col-6">
+            <form method="POST" action="{{ route('posted-jobs.saveJob', ['id' => $posted_job->id]) }}">
+              @csrf
+
+              <button type="submit" class="btn btn-block btn-md {{ $jobSaved = 1 ? 'btn-info' : 'btn-light ' }} " {{ $jobSaved = 1 ? 'disabled' : '' }}>
+                <i class="icon-heart"></i> {{ $jobSaved = 1 ? 'Job saved' : ' Save Job' }}
+              </button>
+            </form>
+
+            <!-- <button class="btn btn-block btn-light btn-md"><i class="icon-heart"></i>Save Job</button> -->
+            <!--add text-danger to it to make it read-->
+          </div>
+          <div class="col-6">
+            <button class="btn btn-block btn-primary btn-md">Apply Now</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="bg-light p-3 border rounded mb-4">
+          <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Job Summary</h3>
+          <ul class="list-unstyled pl-3 mb-0">
+            <li class="mb-2"><strong class="text-black">Published on:</strong> {{ \Carbon\Carbon::parse($posted_job->created_at)->format('d-m-Y') }}</li>
+            <li class="mb-2"><strong class="text-black">Vacancy:</strong> {{$posted_job->vacancy}}</li>
+            <li class="mb-2"><strong class="text-black">Employment Status:</strong> {{$posted_job->job_type}}</li>
+            <li class="mb-2"><strong class="text-black">Experience:</strong> 2 to 3 year(s)</li>
+            <li class="mb-2"><strong class="text-black">Job Location:</strong> {{$posted_job->job_region}}</li>
+            <li class="mb-2"><strong class="text-black">Salary:</strong> {{$posted_job->salary}} Euro</li>
+            <li class="mb-2"><strong class="text-black">Gender:</strong> {{$posted_job->gender}}</li>
+            <li class="mb-2"><strong class="text-black">Application Deadline:</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-light p-3 border rounded">
+          <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Share</h3>
+          <div class="px-3">
+            <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-facebook"></span></a>
+            <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-twitter"></span></a>
+            <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
 </section>
 
 <section class="site-section" id="next">

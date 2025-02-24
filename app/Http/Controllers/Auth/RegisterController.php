@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
+
 
 class RegisterController extends Controller
 {
@@ -40,6 +44,26 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+
+    public function register(Request $request)
+    {
+        // dd($request->all());
+        $this->validator($request->all())->validate();
+        $user = $this->create($request->all());
+
+        // event(new Registered($user = $this->create($request->all())));
+
+        // Log the user in after successful registration
+        if ($user) {
+            // Auth::login($user);
+            return redirect(route('login'))->with('success', 'Registration successful. Please login to continue.');
+        }
+        else{
+            return redirect(route('register'))->with('error', 'Registration failed. Please try again.');
+        }
+    }
+
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -56,13 +80,13 @@ class RegisterController extends Controller
 
         ]);
 
-             // Handle profile picture upload (if exists)
-             if ($request->hasFile('user_image')) {
-                $imagePath = $request->file('user_image')->store('user_image', 'public');
-            } else {
-                // If no image is uploaded, use the default image path
-                $imagePath = 'images/default_profile.jpg';
-            }
+        // Handle profile picture upload (if exists)
+        if ($request->hasFile('user_image')) {
+            $imagePath = $request->file('user_image')->store('user_image', 'public');
+        } else {
+            // If no image is uploaded, use the default image path
+            $imagePath = 'images/default_profile.jpg';
+        }
     }
 
     /**
@@ -73,6 +97,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -80,4 +105,5 @@ class RegisterController extends Controller
             'user_image' => 'default.jpg',
         ]);
     }
+    //dd($data);
 }
