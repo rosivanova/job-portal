@@ -17,10 +17,28 @@ use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
-    public function profile()
+    public function profile(Request $request)
     {
-        $profile = User::find(Auth::user()->id);
-        return view('users.profile', compact('profile'));
+        
+        // $user = Auth::user();
+        // $profile = User::find($user->id);
+        // dd($profile);
+        // $profile = User::find(Auth::user()->id);
+        // dd($profile);
+    
+        //$profile = User::find(Auth::user()->id);
+        $appliedJobs = Application::where('user_id', '=', Auth::user()->id)
+            ->join('posted_jobs', 'applications.job_id', '=', 'posted_jobs.id')
+            ->select('applications.*', 'posted_jobs.*')
+            ->get();
+        
+        //dd($appliedJobs);
+        $savedJobs = JobSaved::where('user_id', '=', Auth::user()->id)
+            ->count();
+        $appliedJobsCount = Application::where('user_id', '=', Auth::user()->id)
+            ->count();
+        $profile=User::find($request->user()->id);
+        return view('pages.profile', compact('profile','appliedJobs','savedJobs','appliedJobsCount'));
     }
 
     public function applications()

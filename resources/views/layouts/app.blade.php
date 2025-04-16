@@ -56,7 +56,7 @@
                             <li><a href="{{ route('home')}}" class="nav-link active">Home</a></li>
                             <li><a href="{{ route('about')}}">About Us</a></li>
 
-                            <li><a href="{{ route('home')}}">Profile</a></li>
+                            <li><a href="{{ route('profile')}}">Profile</a></li>
 
                             <li><a href="{{ route('home')}}">Contact</a></li>
                             <!-- <li class="d-lg-none"><a href="post-job.html"><span class="mr-2">+</span> Post a Job</a></li> -->

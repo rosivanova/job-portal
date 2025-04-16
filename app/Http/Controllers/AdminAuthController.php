@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\JobSaved;
+use Illuminate\Support\Facades\Session;
 
 class AdminAuthController extends Controller
 {
@@ -25,13 +27,17 @@ class AdminAuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
+        // Get the currently authenticated user...
+        // dd($user);
         if (Auth::attempt($credentials)) {
-            return redirect()->route('admins.dashboard')->with('success', 'Successfully logged in as Admin');
+            $user = Auth::user(); // pass $user to your view
+           // $user = User::where('id', '=', Session::get('loginId'))->first();
+dd($user);
+           // return view('admins.dashboard',compact('user'));
             //return redirect('admins/dashboard')->with('success', 'Successfully logged in as Admin');
             //return view('admins.index')->with('success', 'Successfully logged in as Admin');
-        }else{
+        } else {
             return redirect()->back()->with(['error' => 'Error logging in']);
-
         }
 
         // return back()->withErrors(['error' => 'Invalid credentials']);
@@ -323,7 +329,7 @@ class AdminAuthController extends Controller
 
     public function displayUsers()
     {
-        $users = User::orderBy('id','desc')->get();
+        $users = User::orderBy('id', 'desc')->get();
         // $applications = Application::with('users')->where('id', $job_id)->get();
 
 

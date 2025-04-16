@@ -62,11 +62,23 @@
       {{ session('save') }}
     </div>
     @endif
+    @if (session('applied'))
+    <div class="alert alert-success">
+      {{ session('applied') }}
+    </div>
+    @endif
+    
+    @if (session('missingCV'))
+    <div class="alert alert-warning">
+      {{ session('missingCV') }}
+    </div>
+    @endif
     <div class="row align-items-center mb-5">
       <div class="col-lg-8 mb-4 mb-lg-0">
         <div class="d-flex align-items-center">
           <div class="border p-2 d-inline-block mr-3 rounded">
-            <img src="images/job_logo_5.jpg" alt="Image">
+            
+            <img src="images/{{$posted_job->job_image}}" alt="Image">
           </div>
           <div>
             <h2>{{$posted_job->job_title}}</h2>
@@ -113,9 +125,8 @@
           <div class="col-6">
             <form method="POST" action="{{ route('posted-jobs.saveJob', ['id' => $posted_job->id]) }}">
               @csrf
-
-              <button type="submit" class="btn btn-block btn-md {{ $jobSaved = 1 ? 'btn-info' : 'btn-light ' }} " {{ $jobSaved = 1 ? 'disabled' : '' }}>
-                <i class="icon-heart"></i> {{ $jobSaved = 1 ? 'Job saved' : ' Save Job' }}
+              <button type="submit" class="btn btn-block btn-md {{ $jobSaved = 0 ? 'btn-info' : 'btn-danger ' }} " {{ $jobSaved > 0 ? "disabled" : "" }}>
+                <i class="icon-heart"></i> {{ $jobSaved > 0 ? 'Job saved' : ' Save Job' }}
               </button>
             </form>
 
@@ -123,7 +134,10 @@
             <!--add text-danger to it to make it read-->
           </div>
           <div class="col-6">
-            <button class="btn btn-block btn-primary btn-md">Apply Now</button>
+            <form method="POST" action="{{ route('posted-jobs.apply', ['id' => $posted_job->id]) }}">
+              @csrf
+              <button type="submit" class="btn btn-block  btn-md {{$jobApplied > 0 ? 'btn-info' : 'btn-primary' }}" {{$jobApplied > 0 ? "disabled" : "" }} > {{ $jobApplied > 0 ? "Already fapplied" : "Apply Now"}}</button>
+            </form>
           </div>
         </div>
       </div>
@@ -171,7 +185,7 @@
       <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
         <a href="job-single.html"></a>
         <div class="job-listing-logo">
-          <img src="images/job_logo_1.jpg" alt="Image" class="img-fluid">
+          <img src="" alt="Image" class="img-fluid">
         </div>
 
         <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">

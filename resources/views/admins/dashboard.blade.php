@@ -8,8 +8,31 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title mt-5">DASHBOARD</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Welcome,{{ Auth::user()->name }} </h6>
+          <p class="card-text">You are logged in.</p>
+       
+
+          <div class="p-4 bg-green-100">
+          {{ Auth::user()->email }}
+          </div>
+
+          <p>
+
+            <strong>Welcome to the Admin Dashboard!</strong><br>
+            Here you can manage all aspects of the application, including users, roles, and permissions.
+          </p>
 
         </div>
+        @foreach ($users as $user)
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ $user->name }}</h5>
+            <p class="card-text">{{ $user->email }}</p>
+
+          </div>
+        </div>
+        @endforeach
+
       </div>
     </div>
   </div>

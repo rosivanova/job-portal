@@ -18,4 +18,6 @@ class JobSaved extends Model
     ];
 
     public $timestamps = true;
+
+    
 }

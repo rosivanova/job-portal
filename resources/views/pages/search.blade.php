@@ -2,8 +2,8 @@
 
 @section('content')
 
-<section class="home-section section-hero overlay bg-image" style="background-image: url(' {{ asset('assets/images/hero_1.jpg') }} ');" id="home-section">
-
+<!-- <section class="home-section section-hero overlay bg-image" style="background-image: url(' {{ asset('assets/images/hero_1.jpg') }} ');" id="home-section"> -->
+<section class="home-section overlay" style="background-image: url(' {{ asset('assets/images/hero_1.jpg') }} ');" id="home-section">
 
 
   <a href="#next" class="scroll-button smoothscroll">
@@ -99,7 +99,7 @@
   </div>
 </section>
 
-<section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: url('images/hero_1.jpg');">
+<section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: '{{ asset('assets/images/hero_1.jpg') }}'">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-8">
@@ -114,7 +114,7 @@
 </section>
 
 
-<section class="site-section py-4">
+<!-- <section class="site-section py-4">
   <div class="container">
 
     <div class="row align-items-center">
@@ -154,7 +154,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 
 <section class="bg-light pt-5 testimony-full">
@@ -185,7 +185,7 @@
           </blockquote>
         </div>
         <div class="col-lg-6 align-self-end text-center text-lg-right">
-          <img src="images/person_transparent.png" alt="Image" class="img-fluid mb-0">
+          <img src="{{ asset('assets/images/person_transparent.png') }}" alt="Image" class="img-fluid mb-0">
         </div>
       </div>
     </div>
@@ -194,7 +194,7 @@
 
 </section>
 
-<section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url( '{{ asset('assets/images/hero_1.jpg') }} );">
+<section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url( '{{ asset('assets/images/hero_1.jpg') }}' )" >
   <div class="container">
     <div class="row">
       <div class="col-md-6 align-self-center text-center text-md-left mb-5 mb-md-0">

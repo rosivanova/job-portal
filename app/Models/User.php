@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+// use MfaToken; // Remove this line if it exists
+use App\Models\MfaToken; // Add this line
 
 class User extends Authenticatable
 {
@@ -57,6 +61,25 @@ class User extends Authenticatable
     {
         return $this->is_admin; // assuming 'is_admin' is a boolean field in your users table
     }
+
+    public function sendMfaToken(User $user)
+{
+    $token = Str::random(40);
+    $expiresAt = now()->addMinutes(10);
+
+    MfaToken::create([
+        'user_id' => $user->id,
+        'token' => $token,
+        'expires_at' => $expiresAt,
+    ]);
+
+    $verificationUrl = route('mfa.verify', ['token' => $token]);
+
+    Mail::send('emails.mfa', ['url' => $verificationUrl], function ($message) use ($user) {
+        $message->to($user->email);
+        $message->subject('Your MFA Verification Link');
+    });
+}
 
 
 }

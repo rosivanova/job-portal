@@ -89,28 +89,38 @@ class PostedJobController extends Controller
          } 
     }
 
-    public function jobApply(Request $request)
+    public function apply(Request $request)
     {
+        // dd($request->all());
+        if (!Auth::user()) {
+            // Redirect if the user is not authenticated
+            return redirect()->route('login')->with('error', 'You need to be logged in to apply for a job.');
+        }
+            // dd();
         if (Auth::user()->cv == 'No CV') {
-            return redirect('/posted-job/single/' . $request->job_id . '')->with('apply', 'Upoad your CV first');
+            return redirect('posted-jobs/'. $request->id .'/single')->with('missingCV', 'Please, Upoad your CV first');
         } else {
+
+            $jobDetails = PostedJob::find($request->id);
+             //dd($jobDetails);
+
             $applyJob = Application::create(
                 [
                     'cv' => Auth::user()->cv,
-                    'job_id' => $request->job_id,
+                    'job_id' => $request->id,
                     'user_id' => Auth::user()->id,
                     'email' => Auth::user()->email,
-                    'job_image' => $request->job_image,
-                    'job_title' => $request->job_title,
-                    'job_region' => $request->job_region,
-                    'job_type' => $request->job_type,
-                    'company' => $request->company,
+                    'job_image' => $jobDetails->job_image,
+                    'job_title' => $jobDetails->job_title,
+                    'job_region' => $jobDetails->job_region,
+                    'job_type' => $jobDetails->job_type,
+                    'company' => $jobDetails->company,
                 ]
             );
         }
 
         if ($applyJob) {
-            return redirect('/posted-job/single/' . $request->job_id . '')->with('applied', 'You have applied successfully for this job');
+            return redirect('posted-jobs/'. $request->id .'/single')->with('applied', 'You have applied successfully for this job');
         }
     }
 
