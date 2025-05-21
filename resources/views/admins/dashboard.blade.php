@@ -1,7 +1,11 @@
 @extends ('layouts.app')
 
 @section('content')
-
+<section class="home-section section-hero overlay bg-image" style="background-image: url(' {{ asset('assets/images/hero_1.jpg') }} ');" id="home-section">
+  <a href="#next" class="scroll-button smoothscroll">
+    <span class=" icon-keyboard_arrow_down"></span>
+  </a>
+</section>
 <div class="container-fluid">
   <div class="row">
     <div class="col">
