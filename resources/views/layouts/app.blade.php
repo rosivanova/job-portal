@@ -54,11 +54,16 @@
                     <nav class="mx-auto site-navigation">
                         <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
                             <li><a href="{{ route('home')}}" class="nav-link active">Home</a></li>
-                            <li><a href="{{ route('about')}}">About Us</a></li>
-
-                            <li><a href="{{ route('profile')}}">Profile</a></li>
-
-                            <li><a href="{{ route('home')}}">Contact</a></li>
+                            <li><a href="{{ route('about')}}" class="nav-link">About Us</a></li>
+                            @auth
+                            <li><a href="{{ route('profile')}}" class="nav-link">Profile</a></li>
+                            @endauth
+                            @auth
+                                @if (auth()->user()->is_admin)
+                               <li><a href="{{ route('admins.dashboard') }}" class="nav-link">Admin Dashboard</a></li> 
+                                @endif
+                            @endauth
+                            <li><a href="{{ route('home')}}" class="nav-link">Contact</a></li>
                             <!-- <li class="d-lg-none"><a href="post-job.html"><span class="mr-2">+</span> Post a Job</a></li> -->
                             <li class="d-lg-none"><a href="login.html">Log In</a></li>
                         </ul>
@@ -71,7 +76,7 @@
                             <a href="{{ route('login') }}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log In</a>
                             <a href="{{ route('register') }}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Register</a>
                             @else
-                            <form method="POST" action="{{ route('logout') }}" >
+                            <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Log Out</button>
                             </form>

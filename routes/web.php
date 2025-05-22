@@ -90,6 +90,8 @@ Route::get('/admin/dashboard', function () {
     }
    // return view('admins.dashboard'); // Return the 'login' view
 })->name('admins.dashboard');
+Route::get('/admin/edit/{$id}',[AdminAuthController::class, 'editUsers'])->name('admins.edit');
+Route::get('/admin/delete',[AdminAuthController::class, 'deleteUsers'])->name('admins.delete');
 // Route::get('/admin/displayUsers', [AdminAuthController::class, 'displayUsers'])->name('admins.displayUsers');
 
 

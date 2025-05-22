@@ -5,6 +5,9 @@
   position: absolute;
   width: 100%;
   top: 2rem; }
+  .nav-link{
+    color: #89ba16 !important;
+  }
   .site-navbar .container-fluid {
     padding-left: 7rem;
     padding-right: 7rem; }

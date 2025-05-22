@@ -372,4 +372,9 @@ dd($user);
             return redirect()->back()->with(['error' => 'Error creating Admin']);
         }
     }
+    public function editUsers($id)
+    {
+        $user = User::find($id);
+        return view('admins.edit-users', compact('user'));
+    }
 }
